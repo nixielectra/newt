@@ -49,13 +49,3 @@ jobs:
               run: |
                   TAG=${{ env.TAG }}
                   make docker-build-release tag=$TAG
-
-            - name: Build binaries
-              run: |
-                  make go-build-release
-
-            - name: Upload artifacts from /bin
-              uses: actions/upload-artifact@v4
-              with:
-                  name: binaries
-                  path: bin/

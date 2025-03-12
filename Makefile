@@ -6,17 +6,17 @@ docker-build-release:
 		echo "Error: tag is required. Usage: make build-all tag=<tag>"; \
 		exit 1; \
 	fi
-	docker buildx build --platform linux/arm/v7,linux/arm64,linux/amd64 -t fosrl/newt:latest -f Dockerfile --push .
-	docker buildx build --platform linux/arm/v7,linux/arm64,linux/amd64 -t fosrl/newt:$(tag) -f Dockerfile --push .
+	docker buildx build --platform linux/arm/v7,linux/arm64,linux/amd64 -t nixielectra/newt:latest -f Dockerfile --push .
+	docker buildx build --platform linux/arm/v7,linux/arm64,linux/amd64 -t nixielectra/newt:$(tag) -f Dockerfile --push .
 
 build:
-	docker build -t fosrl/newt:latest .
+	docker build -t nixielectra/newt:latest .
 
 push:
-	docker push fosrl/newt:latest
+	docker push nixielectra/newt:latest
 
 test:
-	docker run fosrl/newt:latest
+	docker run nixielectra/newt:latest
 
 local: 
 	CGO_ENABLED=0 go build -o newt
