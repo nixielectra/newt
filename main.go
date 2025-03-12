@@ -137,24 +137,13 @@ func startPingCheck(tnet *netstack.Net, serverIP string, stopChan chan struct{})
 
 func pingWithRetry(tnet *netstack.Net, dst string) error {
 	const (
-		maxAttempts = 5
 		retryDelay  = 2 * time.Second
 	)
 
-	var lastErr error
-	for attempt := 1; attempt <= maxAttempts; attempt++ {
-		logger.Info("Ping attempt %d of %d", attempt, maxAttempts)
-
+	for {
 		if err := ping(tnet, dst); err != nil {
-			lastErr = err
-			logger.Warn("Ping attempt %d failed: %v", attempt, err)
-
-			if attempt < maxAttempts {
-				time.Sleep(retryDelay)
-				continue
-			}
-			return fmt.Errorf("all ping attempts failed after %d tries, last error: %w",
-				maxAttempts, lastErr)
+			time.Sleep(retryDelay)
+			continue
 		}
 
 		// Successful ping
